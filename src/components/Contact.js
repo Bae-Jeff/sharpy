@@ -1,16 +1,20 @@
 import { Component } from '../lib/sharpy.js';
 
 export class ContactPage extends Component {
+
     async render() {
+        const { params, state } = this.props;
+        console.log('State:', state);
+        
         return `
             <div class="contact-page">
-                <h1>Contact Us</h1>
-                <form id="contact-form">
-                    <input type="text" placeholder="Name" />
-                    <input type="email" placeholder="Email" />
-                    <textarea placeholder="Message"></textarea>
-                    <button type="submit">Send</button>
-                </form>
+                <h1>Contact Page</h1>
+                <p>Contact ID: ${params.id}</p>
+                ${state ? `
+                    <p>User ID: ${state.userId}</p>
+                    <p>Previous Page: ${state.previousPage}</p>
+                    <p>Extra Data: ${state.someData.foo}</p>
+                ` : ''}
             </div>
         `;
     }

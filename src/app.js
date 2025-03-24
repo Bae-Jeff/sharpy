@@ -7,15 +7,24 @@ import { ContactPage } from './components/Contact.js';
 const router = new Sharpy({
     root: document.getElementById('content'),
     loading: document.getElementById('loading'),
-    loadingParent: document.getElementById('content'), // 로딩을 표시할 부모 요소 지정
-    mode: 'hash' // 해시 모드 활성화
+    mode: 'hash'
 });
 
 // 라우트 설정
 router
     .route('/', HomePage)
     .route('/about', AboutPage)
-    .route('/contact', ContactPage);
+    .route('/contact', ContactPage)
+    .route('/contact/:id', ContactPage)
+    .route('/contact/:id/edit', ContactPage, { type: 'edit' });
 
-// 초기 라우트 처리
 router.handleRoute(); 
+
+setTimeout(() => {
+    router.navigate('/contact/123', { 
+        userId: 123,
+        previousPage: '/home',
+        someData: { foo: 'bar' }
+    });
+}, 3000);
+// state와 함께 네비게이션

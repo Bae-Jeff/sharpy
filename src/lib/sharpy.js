@@ -65,6 +65,7 @@ export class Sharpy {
         this.showLoading();
         try {
             if (this.mode === 'hash') {
+                this.currentState = data;
                 window.location.hash = path;
             } else {
                 window.history.pushState(data, '', path);
@@ -96,9 +97,16 @@ export class Sharpy {
                     await this.currentComponent.beforeUnmount();
                 }
 
+                let state;
+                if (this.mode === 'hash') {
+                    state = this.currentState || null;
+                } else {
+                    state = window.history.state;
+                }
+
                 this.currentComponent = new match({
                     params,
-                    state: this.mode === 'history' ? window.history.state : null
+                    state: state
                 });
 
                 if (this.currentComponent.beforeMount) {
